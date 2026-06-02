@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUNDIAL DIGITAL 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #29c5f5;
+            --deep-purple: #1a0033;
+            --electric-blue: #00d4ff;
+            --fifa-navy: #060e22;
+        }
+
+        .pdf-mode * {
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+}
+
+.pdf-mode {
+    background: white !important;
+}
+
+.pdf-mode .card {
+    background: white !important;
+    box-shadow: none !important;
+}
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('imagenes/fondomundial.png') center top / 100% auto repeat-y;
+            color: white; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
+        }
+
+        .page-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #intro-screen { text-align: center; transition: opacity 0.4s ease; }
+
+        .intro-logo {
+            max-width: 420px;
+            width: 90%;
+            height: auto;
+            margin: 0 auto 24px;
+            display: block;
+        }
+
+        .intro-text {
+            margin: 0 0 24px;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 720px;
+            line-height: 1.5;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: 4rem;
+            background: linear-gradient(to right, var(--neon-green), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 40px 0;
+            text-transform: uppercase;
+        }
+
+        .main-controls { display: flex; gap: 20px; justify-content: center; }
+
+        .btn-xl {
+            padding: 16px 50px; font-size: 1.1rem; border: 2px solid white; border-radius: 50px;
+            font-weight: 700; cursor: pointer; text-transform: uppercase;
+            transition: 0.3s ease;
+            background: #2a2a2a;
+            color: white;
+            box-shadow: none;
+        }
+
+        .btn-draw { background: #2a2a2a; color: white; }
+        .btn-mix { background: #2a2a2a; color: white; }
+        .btn-xl:hover { background: #f5d060; color: black; transform: none; filter: none; }
+
+        #status-msg {
+            display: none; font-size: 3.5rem; font-weight: 900; color: var(--neon-green);
+            text-align: center; text-shadow: 0 0 25px var(--neon-green);
+        }
+
+        #download-area { display: none; margin: 20px 0; text-align: center; width: 100%; }
+        .btn-pdf {
+            background: #ff0055; color: white; padding: 15px 35px; border: none;
+            border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 1.1rem;
+        }
+
+        /* CONFIGURACIÓN A4 PARA EVITAR 2 PÁGINAS */
+        #a4-page {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 210mm;
+            height: 290mm; /* Altura fija A4 */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8mm;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 6mm;
+            border-radius: 12px;
+            box-sizing: border-box;
+            color: #111;
+            overflow: hidden; /* Evita que contenido extra cree página 2 */
+        }
+
+        #cards-display {
+            display: none;
+            width: 100%;
+            padding: 40px 20px;
+            background: transparent;
+            gap: 20px;
+            box-sizing: border-box;
+            color: #111;
+            overflow: auto;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: row;
+        }
+.pdf-mode .fifa-card {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    animation: none !important;
+    transition: none !important;
+}
+        #cards-display .fifa-card {
+            flex: 0 0 calc(25% - 15px);
+            max-width: 300px;
+            height: auto;
+            min-height: 450px;
+        }
+
+        @media (max-width: 1200px) {
+            #cards-display .fifa-card {
+                flex: 0 0 calc(50% - 10px);
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #cards-display .fifa-card {
+                flex: 0 0 calc(100% - 40px);
+                max-width: none;
+            }
+        }
+
+        .fifa-card {
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 22px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: url('./imagenes/fondocarta.png') center / cover no-repeat #fff;
+            opacity: 0;
+            transform: translateY(15px);
+            height: 135mm;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .fifa-card::before {
+            content: none;
+        }
+
+        .card-header {
+            color: #111;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-shadow: none;
+        }
+
+        .card-header span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+            font-size: 1.6rem;
+            line-height: 1;
+            font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+        }
+
+        .card-body {
+            padding: 12px 16px 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            color: #1b2e5c;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 10px 0 8px 0;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 38px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-green), var(--electric-blue));
+            border-radius: 2px;
+        }
+
+        .question-box {
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.95);
+            padding: 8px 10px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+        }
+
+        .question-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1.25;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .underline {
+            border-bottom: 1px solid #c0b8aa;
+            height: 12px;
+            width: 100%;
+            margin-top: 2px;
+            border-radius: 2px;
+        }
+
+        .show-card { animation: slideUp 0.5s ease forwards; }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        @media print {
+            #intro-screen, #status-msg, #download-area { display: none !important; }
+            body { background: white; padding: 0; }
+            #a4-page { display: grid !important; margin: 0; border: none; background: white !important; }
+        }
+
+        /* ── FOOTER ── */
+  footer { 
+    background: var(--gris); 
+    color: rgba(255,255,255,0.4); 
+    text-align: center; 
+    padding: 0px; 
+    font-size: 11px; 
+    border-top: 3px solid var(--amarillo); 
+    margin-top: 48px; 
+  }
+
+  footer em { 
+    color: var(--amarillo); 
+    font-style: normal; 
+    font-weight: 600; 
+  }
+
+  /* ── FOOTER NUEVO ── */
+  .bgc-footer{
+    background:#0b3a4b;
+    color:white;
+    margin-top:auto;
+    padding:40px 0 10px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+  }
+
+  .bgc-footer-inner{
+    max-width:1200px;
+    margin:auto;
+    padding:0 30px;
+  }
+
+  .bgc-footer-logos{
+    display:flex;
+    justify-content: center;
+    gap:30px;
+    align-items:center;
+  }
+
+  #bgc-footer-logos-ed{
+    height:25px;
+  }
+
+  #bgc-footer-logos-mi{
+    height: 28px;
+  }
+
+  .bgc-footer-logos img{
+    height:34px;
+  }
+
+  .bgc-footer-sep{
+    height:1px;
+    background:#0b3a4b !important;
+    margin:24px 0;
+  }
+
+  .bgc-footer-links{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+
+  .bgc-footer-links a{
+    color:white;
+    text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,0.5);
+  }
+
+  .bgc-footer-links a:hover{
+    border-color:white;
+  }
+
+  .bgc-footer-legal{
+    margin-top:40px;
+    font-size:12px;
+    opacity:0.85;
+  }
+  footer#changelanguage{
+    display:none !important;
+  }
+
+  @media (max-width: 768px) {
+
+  .bgc-footer{
+    padding:30px 0 18px;
+  }
+
+  .bgc-footer-inner{
+    padding:0 18px;
+  }
+
+  .bgc-footer-logos{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+  }
+
+  .bgc-footer-logos img{
+    max-width:90%;
+    height:auto;
+  }
+
+  #bgc-footer-logos-ed,
+  #bgc-footer-logos-mi{
+    height:auto;
+    max-height:28px;
+  }
+
+  .bgc-footer-links{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+    text-align:left;
+  }
+
+  .bgc-footer-links a{
+    font-size:14px;
+    line-height:1.5;
+    border-bottom:none;
+  }
+
+  .bgc-footer-legal{
+    margin-top:28px;
+    font-size:11px;
+    text-align:left;
+    line-height:1.5;
+  }
+
+}
+
+  .footer-min-edu { 
+    font-size: 13px; color: rgba(255,255,255,0.7); 
+  }
+
+  .footer-social-icons a { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    font-size: 13px; 
+    color: rgba(255,255,255,0.85); 
+    text-decoration: none; 
+  }
+    </style>
+</head>
+<body>
+    <div class="page-body">
+        <div id="intro-screen">
+            <img src="./Logos/logomundial.png" alt="Mundial Digital 2026" class="intro-logo">
+            <p class="intro-text">Generá una trivia desenchufada para imprimir, investigar y jugar en el aula.</p>
+            <div class="main-controls">
+                <button class="btn-xl btn-draw" onclick="iniciarSorteo('grupo')">Grupos Existentes</button>
+                <button class="btn-xl btn-mix" onclick="iniciarSorteo('nuevo')">Mezclar Países</button>
+            </div>
+        </div>
+
+        <div id="status-msg">ELIGIENDO...</div>
+
+        <div id="download-area">
+            <button class="btn-pdf" onclick="descargarPDF()">DESCARGAR EN PDF</button>
+            <button style="background:none; color:white; border:1px solid white; margin-left:15px; padding:15px; cursor:pointer; border-radius:6px;" onclick="location.reload()">REINICIAR</button>
+        </div>
+
+        <div id="a4-page"></div>
+        <div id="cards-display"></div>
+    </div>
+<footer>
+  <div class="bgc-footer">
+    <div class="bgc-footer-inner">
+
+      <div class="bgc-footer-logos">
+        <img src="./Logos/BA.png">
+        <img id="bgc-footer-logos-mi" src="./Logos/Ministerio.png">
+        <img id="bgc-footer-logos-ed" src="./Logos/ED.png">
+      </div>
+
+      <div class="bgc-footer-sep"></div>
+
+      <div class="bgc-footer-links">
+        <a href="https://boletinoficial.buenosaires.gob.ar">Boletín oficial</a>
+        <a href="https://buenosaires.gob.ar/terminos">Términos y condiciones</a>
+        <a href="https://buenosaires.gob.ar/privacidad">Política de privacidad</a>
+        <a href="https://buenosaires.gob.ar/oficios">Oficios Judiciales</a>
+        <a href="https://buenosaires.gob.ar/transparencia">Transparencia</a>
+      </div>
+
+      <div class="bgc-footer-legal">
+        © 2026 Mundial Digital · Todos los derechos reservados.
+      </div>
+
+    </div>
+  </div>
+</footer>
+    <script>
+                const flags = {
+            "México": "🇲🇽", "Sudáfrica": "🇿🇦", "Corea del Sur": "🇰🇷", "República Checa": "🇨🇿",
+            "Canadá": "🇨🇦", "Bosnia": "🇧🇦", "Catar": "🇶🇦", "Suiza": "🇨🇭",
+            "Brasil": "🇧🇷", "Marruecos": "🇲🇦", "Haití": "🇭🇹", "Escocia": "🏴",
+            "EE. UU.": "🇺🇸", "Paraguay": "🇵🇾", "Australia": "🇦🇺", "Turquía": "🇹🇷",
+            "Alemania": "🇩🇪", "Curazao": "🇨🇼", "Costa de Marfil": "🇨🇮", "Ecuador": "🇪🇨",
+            "Países Bajos": "🇳🇱", "Japón": "🇯🇵", "Suecia": "🇸🇪", "Túnez": "🇹🇳",
+            "Bélgica": "🇧🇪", "Egipto": "🇪🇬", "Irán": "🇮🇷", "N. Zelanda": "🇳🇿",
+            "España": "🇪🇸", "Cabo Verde": "🇨🇻", "Arabia": "🇸🇦", "Uruguay": "🇺🇾",
+            "Francia": "🇫🇷", "Senegal": "🇸🇳", "Irak": "🇮🇶", "Noruega": "🇳🇴",
+            "Argentina": "🇦🇷", "Argelia": "🇩🇿", "Austria": "🇦🇹", "Jordania": "🇯🇴",
+            "Portugal": "🇵🇹", "RD Congo": "🇨🇩", "Uzbekistán": "🇺🇿", "Colombia": "🇨🇴",
+            "Inglaterra": "🏴", "Croacia": "🇭🇷", "Ghana": "🇬🇭", "Panamá": "🇵🇦"
+        };
+
+        const GOOGLE_SHEET_ID_FUTBOL = '1fS_1_5Y8gFVdjp2GGO9JSD1lSdomfxwHVdiH2carGKY';
+        const GOOGLE_SHEET_ID_ESCOLAR = '1YVNioes4gr5UCcxIDHbYjrsoR7osrwofKkPuuVfklcg';
+        const SHEET_NAME_FUTBOL = 'Futbol';
+        const SHEET_NAME_ESCOLAR = 'Escolar';
+        const SKIP_HEADER_ROW = true;
+
+        let poolEscolar = [
+            "¿Cuál es la capital del país y cuántos habitantes tiene aproximadamente?",
+            "¿Cuál es el idioma oficial y qué otras lenguas se hablan?",
+            "¿Cuál es la moneda oficial y su tipo de cambio respecto al dólar?",
+            "¿En qué continente se encuentra y con qué países limita?",
+            "¿Cuál es el porcentaje de acceso a internet en la población?",
+            "¿Cómo se fomenta la alfabetización digital en las escuelas?",
+            "¿Cuál es el plato nacional o comida más representativa?",
+            "¿Quién es un personaje histórico o científico relevante del país?",
+            "¿Qué medidas toma el país para proteger su biodiversidad?"
+        ];
+
+        let poolFutbol = [
+            "Máximo goleador histórico del país en los mundiales",
+            "Jugador con más partidos disputados en Copas del Mundo",
+            "Mejor posición alcanzada por la selección en un Mundial",
+            "Año de la primera participación del país en el torneo",
+            "Entrenador con más partidos dirigidos en mundiales"
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPoolsFromGoogleSheet();
+        });
+
+        async function loadPoolsFromGoogleSheet() {
+            const requests = [];
+
+            if (GOOGLE_SHEET_ID_FUTBOL) {
+                requests.push(
+                    fetchGoogleSheet(GOOGLE_SHEET_ID_FUTBOL, SHEET_NAME_FUTBOL)
+                        .catch(err => {
+                            console.warn('Error futbol:', err);
+                            return [];
+                        })
+                );
+            }
+
+            if (GOOGLE_SHEET_ID_ESCOLAR) {
+                requests.push(
+                    fetchGoogleSheet(GOOGLE_SHEET_ID_ESCOLAR, SHEET_NAME_ESCOLAR)
+                        .catch(err => {
+                            console.warn('Error escolar:', err);
+                            return [];
+                        })
+                );
+            }
+
+            if (!requests.length) {
+                return;
+            }
+
+            try {
+                const results = await Promise.all(requests);
+                if (results[0] && Array.isArray(results[0]) && results[0].length) poolFutbol = results[0];
+                if (results[1] && Array.isArray(results[1]) && results[1].length) poolEscolar = results[1];
+            } catch (error) {
+                console.warn('Error general cargando sheets:', error);
+            }
+        }
+
+        async function fetchGoogleSheet(sheetId, sheetName) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} al cargar hoja ${sheetName}`);
+            }
+            const text = await response.text();
+            const json = parseGvizResponse(text);
+            return extractSheetColumn(json);
+        }
+
+        function parseGvizResponse(text) {
+            const prefix = 'google.visualization.Query.setResponse(';
+            const start = text.indexOf(prefix);
+            const end = text.lastIndexOf(');');
+            const jsonText = start >= 0 && end > start
+                ? text.substring(start + prefix.length, end)
+                : text;
+            return JSON.parse(jsonText);
+        }
+
+        function extractSheetColumn(json) {
+            if (!json || !json.table || !Array.isArray(json.table.rows)) {
+                return [];
+            }
+            const rows = json.table.rows;
+            const values = rows
+                .map((row, index) => {
+                    const cell = row.c && row.c[0];
+                    return cell && cell.v ? cell.v.toString().trim() : '';
+                })
+                .filter(Boolean);
+
+            return SKIP_HEADER_ROW ? values.slice(1) : values;
+        }
+
+        function iniciarSorteo(tipo) {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                const msg = document.getElementById('status-msg');
+                msg.style.display = 'block';
+                
+                let i = 0;
+                const interval = setInterval(() => {
+                    const keys = Object.keys(flags);
+                    msg.innerText = keys[Math.floor(Math.random()*keys.length)].toUpperCase();
+                    if(i++ > 15) {
+                        clearInterval(interval);
+                        msg.style.display = 'none';
+                        revelar(tipo);
+                    }
+                }, 80);
+            }, 400);
+        }
+
+        function shuffleArray(array) {
+            const copy = array.slice();
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function getGroupsFromFlags() {
+            const keys = Object.keys(flags);
+            const groups = [];
+            for (let i = 0; i < keys.length; i += 4) {
+                groups.push(keys.slice(i, i + 4));
+            }
+            return groups;
+        }
+
+        function getRandomRealGroup() {
+            const groups = getGroupsFromFlags();
+            const index = Math.floor(Math.random() * groups.length);
+            return groups[index];
+        }
+
+        function revelar(tipo) {
+            const page = document.getElementById('a4-page');
+            const display = document.getElementById('cards-display');
+            const keys = Object.keys(flags);
+            let seleccion;
+            if (tipo === 'grupo') {
+                seleccion = getRandomRealGroup();
+            } else {
+                seleccion = shuffleArray(keys).slice(0, 4); // Selección aleatoria de 4 países
+            }
+
+            const cardsHTML = seleccion.map((pais, idx) => {
+                const qF = poolFutbol.sort(() => 0.5 - Math.random()).slice(0, 3);
+                const qE = poolEscolar.sort(() => 0.5 - Math.random()).slice(0, 3);
+                return `
+                <div class="fifa-card" style="animation-delay: ${idx * 0.2}s">
+                    <div class="card-header">
+                        <h2>${pais}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="section-header">⚽ INVESTIGACIÓN DEPORTIVA</div>
+                        ${qF.map(q => `<div class="question-box"><span class="question-text">${q}:</span><div class="underline"></div></div>`).join('')}
+                        <div class="section-header">🌐 CULTURA GENERAL</div>
+                        ${qE.map(q => `<div class="question-box"><span class="question-text">${q}:</span><div class="underline"></div></div>`).join('')}
+                    </div>
+                </div>`;
+            }).join('');
+
+            page.innerHTML = cardsHTML;
+            display.style.display = 'flex';
+            display.innerHTML = cardsHTML;
+
+            setTimeout(() => {
+                document.querySelectorAll('.fifa-card').forEach(c => c.classList.add('show-card'));
+                document.body.style.justifyContent = 'flex-start';
+                document.getElementById('download-area').style.display = 'block';
+            }, 100);
+        }
+
+
+        function descargarPDF() {
+
+    const display = document.getElementById('cards-display');
+
+    if (!display || display.children.length === 0) {
+        alert('No hay tarjetas para descargar');
+        return;
+    }
+
+    // activar modo PDF
+    display.classList.add("pdf-mode");
+
+    // detener animaciones
+    document.querySelectorAll('.fifa-card').forEach(card => {
+
+        card.style.animation = 'none';
+        card.style.transition = 'none';
+
+        // forzar estado final
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+    });
+
+    // esperar un frame para asegurar repaint
+    requestAnimationFrame(() => {
+
+        setTimeout(() => {
+
+            const opt = {
+
+                margin: 0,
+
+                filename: 'Mundial_Digital_2026.pdf',
+
+                image: {
+                    type: 'png',
+                    quality: 1
+                },
+
+                html2canvas: {
+                    scale: 3,
+                    useCORS: true,
+                    allowTaint: false,
+                    foreignObjectRendering: false,
+                    backgroundColor: '#ffffff',
+                    logging: false
+                },
+
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'legal',
+                    orientation: 'landscape'
+                }
+            };
+
+            html2pdf()
+                .set(opt)
+                .from(display)
+                .save()
+
+                .then(() => {
+
+                    // restaurar
+                    display.classList.remove("pdf-mode");
+
+                })
+
+                .catch(err => {
+
+                    console.error('Error generando PDF:', err);
+
+                    display.classList.remove("pdf-mode");
+
+                    alert('Error al generar el PDF');
+
+                });
+
+        }, 300);
+
+    });
+}
+    </script>
+</body>
+</html>
