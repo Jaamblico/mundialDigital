@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia · Mundial Digital 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+
+    /* ════════════════════════════════════════════════════════════
+       VARIABLES Y BASE
+       ════════════════════════════════════════════════════════════ */
+    :root {
+      --azul: #0D2137;
+      --amarillo: #FFD100;
+      --turquesa: #46c1ed;
+      --verde: #2DC653;
+      --rojo: #E63946;
+      --naranja: #F77F00;
+      --gris: #2C2C2A;
+      --blanco: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: #303031;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      color: white;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 720px;
+      min-height: 600px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+
+
+
+
+
+    /* ════════════════════════════════════════════════════════════
+       HEADER NUEVO
+       ════════════════════════════════════════════════════════════ */
+    .header-nuevo {
+
+      background-image: url('IM/header_mundial_2026.svg');
+      background-size: contain;
+      background-position: center top;
+      background-repeat: no-repeat;
+      position: relative;
+      color: #ffffff;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      /* 3. Límites opcionales para que no se vuelva gigante en pantallas enormes o diminuto en móviles */
+      max-height: 250px; 
+      min-height: 160px; 
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .wrap-header-nuevo {
+      width: 100%;
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 0;
+      text-align: center;
+    }
+
+    .header-sub-nuevo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+
+
+
+
+
+    /* ════════════════════════════════════════════════════════════
+       PANTALLAS (NAVEGACIÓN)
+       ════════════════════════════════════════════════════════════ */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       PANTALLA INICIO: TÍTULO Y SELECTOR DE GRUPOS
+       ════════════════════════════════════════════════════════════ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, #E63946, #F77F00, #2DC653);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .titulo {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(2rem, 7vw, 3.4rem);
+      background: linear-gradient(to right, var(--amarillo), var(--naranja));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+
+    .subtitulo {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .grupos-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 14px;
+    }
+
+    .grupos-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 500px) {
+      .grupos-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+
+    /* Responsive: Ajuste para pantallas chicas (Celulares) */
+    @media (max-width: 768px) {
+      .banner-container {
+        min-height: 400px; /* Más alto para pantallas grandes */
+        flex-direction: column-reverse; /* Pone la imagen arriba o abajo según prefieras */
+        padding: 0 0 60px;
+      }
+
+      .header-nuevo {
+        height: 5px; /* Más alto para pantallas grandes */
+        flex-direction: column-reverse; /* Pone la imagen arriba o abajo según prefieras */
+        background-size: cover;
+        min-height: 150px;
+      }
+
+      .banner-description {
+        margin: 0 auto;
+      }
+
+      .banner-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .banner-image {
+        display: none;
+      }
+
+      .banner-title {
+        font-size: 1.9rem;
+      }
+      
+      .grupos-grid-section {
+        padding: 0px;
+      }
+    }
+
+    .g-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 6px 10px;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s;
+    }
+
+    .g-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .g-card.active {
+      border-color: var(--gc);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .g-escudo {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--gc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .g-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-start {
+      width: 100%;
+      padding: 18px;
+      background: var(--amarillo);
+      color: var(--azul);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(255, 209, 0, 0.35);
+      transition: all 0.2s;
+      display: none;
+    }
+
+    .btn-start.show {
+      display: block;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 209, 0, 0.4);
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       PANTALLA TRIVIA: TARJETA DE PREGUNTAS
+       ════════════════════════════════════════════════════════════ */
+    .card {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    .card-head {
+      background: linear-gradient(135deg, var(--gris), #1a1a18);
+      padding: 20px;
+      border-bottom: 3px solid var(--turquesa);
+    }
+
+    .card-head-num {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .card-head-grupo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--amarillo);
+    }
+
+    .card-body {
+      padding: 28px;
+      padding-top: 14px;
+    }
+
+    .pregunta {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gris);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* Opciones Múltiples */
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opcion {
+      padding: 14px 18px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gris);
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .opcion:hover {
+      border-color: var(--turquesa);
+      background: #F0FFFE;
+    }
+
+    .opcion.correct {
+      border-color: var(--verde);
+      background: #E8F5E9;
+      color: var(--verde);
+      font-weight: 700;
+    }
+
+    .opcion.incorrect {
+      border-color: var(--rojo);
+      background: #FFEBEE;
+      color: var(--rojo);
+    }
+
+    /* Verdadero/Falso */
+    .vf-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .vf-btn {
+      flex: 1;
+      padding: 16px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gris);
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .vf-btn:hover {
+      border-color: var(--turquesa);
+    }
+
+    .vf-btn.verdadero.correct {
+      border-color: var(--verde);
+      background: var(--verde);
+      color: white;
+    }
+
+    .vf-btn.falso.correct {
+      border-color: var(--rojo);
+      background: var(--rojo);
+      color: white;
+    }
+
+    /* Explicación */
+    .explicacion {
+      background: #FFF9E6;
+      border-left: 4px solid var(--naranja);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 0px;
+      display: none;
+      font-size: 13px;
+      color: var(--gris);
+    }
+
+    .explicacion.show {
+      display: block;
+    }
+
+    /* Reflexión */
+    .reflexion {
+      background: #f0f4ff;
+      border-left: 4px solid var(--turquesa);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--gris);
+    }
+    .reflexion::before {
+      content: '\1F4AC  Para pensar:';
+      font-style: normal;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+      color: var(--turquesa);
+    }
+    .reflexion.show { display: block; }
+
+
+
+    /* Controles */
+    .controles {
+      display: flex;
+      gap: 12px;
+      padding-top: 20px;
+      /* border-top: 1px solid #E0E0E0; */
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-secondary {
+      background: #E0E0E0;
+      color: var(--gris);
+    }
+
+    .btn-secondary:hover {
+      background: #D0D0D0;
+    }
+
+    .btn-secondary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--turquesa);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #00A1A8;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       PANTALLA FIN DE GRUPO
+       ════════════════════════════════════════════════════════════ */
+    .screen-fin {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .fin-emoji {
+      font-size: 60px;
+      margin-bottom: 24px;
+    }
+
+    .fin-titulo {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      background: linear-gradient(to right, var(--amarillo), var(--naranja));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .fin-puntos {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      margin: 32px 0;
+      border: 2px solid var(--turquesa);
+    }
+
+    .fin-puntos-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .fin-puntos-valor {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--amarillo);
+    }
+
+    .fin-puntos-max {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 12px;
+    }
+
+    .fin-mensaje {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .btn-siguiente-grupo {
+      width: 100%;
+      padding: 18px;
+      background: var(--turquesa);
+      color: var(--azul);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(0, 181, 191, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-siguiente-grupo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 181, 191, 0.4);
+    }
+
+
+
+
+
+
+
+
+
+/* ============================================================
+   PUNTUACIÓN: CONTROL DE POSICIÓN (Clase puntuacion-sticky)
+   ============================================================ */
+
+/* En PC (Pantallas de más de 450px): Comportamiento FIXED original */
+.puntuacion-sticky {
+  position: fixed;
+  top: 30px;               /* Distancia desde el tope de la pantalla en PC */
+  right: 20px;             /* Distancia desde la derecha en PC */
+  z-index: 999;
+}
+
+/* En Celulares (450px o menos): Pasa a ser STICKY */
+@media (max-width: 530px) {
+  .puntuacion-sticky {
+    height: 0;             
+    margin-bottom: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 42px;             /* El margen superior con el que te acompañará al scrollear */
+    right: 5%;             /* Desactivamos el fixed de PC */
+    transform: translateY(-30px);    /* Altura negativa para que suba un poco aarriba del header */
+    margin-left: auto;
+    margin-right: 5%;
+    z-index: 999;
+  }
+}
+
+/* ============================================================
+   PUNTUACIÓN: DISEÑO VISUAL ESTÁTICO (Clase puntuacion)
+   ============================================================ */
+
+.puntuacion {
+  background: #46c1ed;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.puntuacion-valor {
+  font-size: 32px;
+  font-weight: 900;
+  margin-top: 4px;
+}
+
+/* Ajuste visual de la tarjeta en celulares para que no ocupe tanto espacio vertical */
+@media (max-width: 530px) {
+  .puntuacion {
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+  .puntuacion-valor {
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .footer-min-edu { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .footer-social-icons a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.85); text-decoration: none; }
+}
+
+
+
+@media screen and (min-width: 1921px) {
+  .header-nuevo {
+    /* 1. Le damos una altura fija o aumentamos tanto el mínimo como el máximo */
+    height: 300px; 
+    max-height: 300px; 
+  }
+}
+
+
+/* ── FOOTER VIEJO/BASE ── */
+  footer { 
+    width: 100%;
+    background: var(--gris); 
+    color: #0b3a4b; 
+    text-align: center; 
+    padding: 0px; 
+    font-size: 11px; 
+    border-top: 3px solid var(--amarillo); 
+  }
+
+  footer em { 
+    color: var(--amarillo); 
+    font-style: normal; 
+    font-weight: 600; 
+  }
+
+  footer#changelanguage {
+    display:none !important;
+  }
+
+  /* ── FOOTER NUEVO ── */
+  .bgc-footer {
+    background: #0b3a4b;
+    color: white;
+    width: 100%;
+    padding: 40px 0 10px;
+  }
+
+  .bgc-footer-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 30px;
+  }
+
+  .bgc-footer-logos {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+  }
+
+  #bgc-footer-logos-ed {
+    height: 25px;
+  }
+
+  #bgc-footer-logos-mi {
+    height: 28px;
+  }
+
+  .bgc-footer-logos img {
+    height: 34px;
+  }
+
+  .bgc-footer-sep {
+    height: 1px;
+    background: #0b3a4b !important;
+    margin: 24px 0;
+  }
+
+  .bgc-footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .bgc-footer-links a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+  }
+
+  .bgc-footer-links a:hover {
+    border-color: white;
+  }
+
+  .bgc-footer-legal {
+    margin-top: 40px;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  </style>
+</head>
+
+<body>
+
+<header class="header-nuevo">
+  <div class="wrap-header-nuevo">
+    </div>
+</header>
+
+<main style="flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 48px;">
+
+  <!-- Puntuación total, va arriba de wrap para que funcione el sticky-->
+  <div class="puntuacion-sticky">
+    <div class="puntuacion">
+      <div>Puntos</div>
+      <div class="puntuacion-valor" id="puntos">0</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- ════════════════════════════════════════════════════════════
+         PANTALLA 1: INICIO (selector de grupos)
+         ════════════════════════════════════════════════════════════ -->
+    <div class="screen active" id="screen-inicio">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <!-- <div class="badge">⚽ 🌐 ✨</div> -->
+        <h1 class="titulo">Trivia</h1>
+        <p class="subtitulo"><b>120 preguntas sobre 48 países</b><br>Fútbol y Cultura Digital</p>
+      </div>
+
+      <div>
+        <div class="grupos-label">Selecciona grupo para jugar</div>
+        <div class="grupos-grid" id="grupos-container"></div>
+      </div>
+
+      <button class="btn-start show" onclick="iniciarTrivia()">Empezar Trivia</button>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         PANTALLA 2: TRIVIA (preguntas y respuestas)
+         ════════════════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-trivia">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-head-num" id="preg-num"></div>
+          <div class="card-head-grupo">Grupo <span id="grupo-label">A</span></div>
+        </div>
+
+        <div class="card-body">
+          <div class="pregunta" id="pregunta-txt"></div>
+
+          <!-- Contenedor de opciones múltiples -->
+          <div id="opciones-container" class="opciones"></div>
+
+          <!-- Contenedor de verdadero/falso -->
+          <div id="vf-container" class="vf-container"></div>
+
+          <!-- Explicación (debajo de opciones) -->
+          <div id="explicacion" class="explicacion">
+            <div id="explicacion-txt"></div>
+          </div>
+          <div id="reflexion" class="reflexion">
+            <div id="reflexion-txt"></div>
+          </div>
+
+          <!-- Botones de navegación -->
+          <div class="controles">
+            <button class="btn btn-secondary" id="btn-ant" onclick="preguntaAnterior()" disabled>← Anterior</button>
+            <button class="btn btn-primary" id="btn-sig" onclick="preguntaSiguiente()">Siguiente →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         PANTALLA 3: FIN DE GRUPO
+         ════════════════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-fin-grupo">
+      <div class="screen-fin">
+        <div class="fin-emoji">🎉</div>
+
+        <h2 class="fin-titulo">
+          ¡Grupo <span id="grupo-fin">A</span> Completado!
+        </h2>
+
+        <div class="fin-puntos">
+          <div class="fin-puntos-label">Puntaje en este grupo</div>
+          <div class="fin-puntos-valor" id="puntaje-grupo">0</div>
+          <div class="fin-puntos-max">/ 100 puntos</div>
+        </div>
+
+        <p class="fin-mensaje">
+          Selecciona otro grupo y seguí jugando para acumular más puntos
+        </p>
+
+        <button class="btn-siguiente-grupo" onclick="volverASeleccionar()">
+          Seleccionar Otro Grupo
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+</main>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="bgc-footer">
+    <div class="bgc-footer-inner">
+
+      <div class="bgc-footer-logos">
+        <img src="./Logos/BA.png">
+        <img id="bgc-footer-logos-mi" src="./Logos/Ministerio.png">
+        <img id="bgc-footer-logos-ed" src="./Logos/ED.png">
+      </div>
+
+      <div class="bgc-footer-sep"></div>
+
+      <div class="bgc-footer-links">
+        <a href="https://boletinoficial.buenosaires.gob.ar">Boletín oficial</a>
+        <a href="https://buenosaires.gob.ar/terminos">Términos y condiciones</a>
+        <a href="https://buenosaires.gob.ar/privacidad">Política de privacidad</a>
+        <a href="https://buenosaires.gob.ar/oficios">Oficios Judiciales</a>
+        <a href="https://buenosaires.gob.ar/transparencia">Transparencia</a>
+      </div>
+
+      <div class="bgc-footer-legal">
+        © 2026 Mundial Digital · Todos los derechos reservados.
+      </div>
+
+    </div>
+  </div>
+</footer>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       JAVASCRIPT
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // CONFIGURACIÓN
+    // ════════════════════════════════════════════════════════════
+    const GRUPOS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+
+    const COLORES = {
+      A: '#e6351f', B: '#303031', C: '#f9c70f', D: '#54c1dc',
+      E: '#67b42e', F: '#2a4c9b', G: '#ff6d00', H: '#ce318a',
+      I: '#63378c', J: '#904415', K: '#e09702', L: '#737373'
+    };
+
+    // ════════════════════════════════════════════════════════════
+    // DATOS DE TRIVIA
+    // Para editar una pregunta: buscá num:X y modificá los campos.
+    // ════════════════════════════════════════════════════════════
+    const datosTrivia = [
+  {num:1, grupo:'A', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje de la población de Sudáfrica tiene acceso a Internet?', opciones:'A. Menos del 30 % | B. Alrededor del 50 % | C. Cerca del 79 % | D. Más del 95 %', respuesta:'C. Cerca del 79 %', explicacion:'Sudáfrica tiene un 78,9% de acceso a Internet, la mayor tasa de conectividad de África Austral.', reflexion:'El 21% de la población sudafricana —más de 13 millones de personas— sigue sin conectarse. ¿Qué derechos se pierden sin acceso a Internet?'},
+  {num:2, grupo:'A', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Corea del Sur fue uno de los primeros países del mundo en desplegar redes 5G a gran escala.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Corea del Sur fue uno de los primeros países en lanzar comercialmente redes 5G a nivel nacional en 2019. Gracias a su fuerte inversión en infraestructura digital, se convirtió en un referente mundial en conectividad móvil de alta velocidad y servicios basados en tecnologías avanzadas.', reflexion:null},
+  {num:3, grupo:'A', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cómo se llama la ley mexicana que protege los derechos de niñas, niños y adolescentes también en los entornos digitales?', opciones:'A. Ley Olimpia | B. Ley General de los Derechos de Niñas, Niños y Adolescentes | C. Marco Civil | D. COPPA', respuesta:'B. LGDNNA', explicacion:'B. Ley General de los Derechos de Niñas, Niños y Adolescentes. Incluye disposiciones para proteger a niñas, niños y adolescentes en los entornos digitales y promover un acceso seguro a Internet.', reflexion:'Argentina también cuenta con normas para proteger a niños, niñas y adolescentes en entornos digitales. El grooming está tipificado en el Código Penal desde 2013. ¿Sabías que podés denunciarlo?'},
+  {num:4, grupo:'A', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántas veces fue México sede de un Mundial antes de 2026?', opciones:'A. Una vez (1970) | B. Dos veces (1970 y 1986) | C. Tres veces | D. Nunca antes', respuesta:'B. Dos veces (1970 y 1986)', explicacion:'México organizó los Mundiales de 1970 y 1986. En 2026 lo hace por tercera vez, un récord histórico.', reflexion:null},
+  {num:5, grupo:'A', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Sudáfrica fue sede del primer Mundial de fútbol celebrado en el continente africano.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En 2010, Sudáfrica fue el primer país africano en albergar una Copa del Mundo de la FIFA, marcando un hito histórico para el continente.', reflexion:null},
+  {num:6, grupo:'A', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje de la población de México tiene acceso a internet?', opciones:'A. 55% | B. 70% | C. 83,5% | D. 97%', respuesta:'C. 83,5%', explicacion:'Aproximadamente el 83,5% de la población de México utiliza Internet, lo que muestra un alto nivel de conectividad, aunque todavía existen diferencias de acceso entre regiones.', reflexion:'¿Qué dificultades puede generar que no todas las personas tengan acceso a Internet en un país?'},
+  {num:7, grupo:'A', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Corea del Sur, casi toda la población tiene acceso a Internet.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Corea del Sur tiene uno de los niveles de conectividad más altos del mundo, con más del 95% de la población utilizando Internet.', reflexion:null},
+  {num:8, grupo:'A', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es la plataforma de mensajería más utilizada en Corea del Sur?', opciones:'A. WhatsApp | B. LINE | C. KakaoTalk | D. Telegram', respuesta:'C. KakaoTalk', explicacion:'KakaoTalk es la aplicación de mensajería más utilizada en Corea del Sur y una de las principales herramientas de comunicación digital del país.', reflexion:'¿Por qué creés que en distintos países se utilizan aplicaciones de mensajería diferentes?'},
+  {num:9, grupo:'A', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Corea del Sur existió una regulación que restringía el acceso de menores de 16 años a videojuegos en línea durante la madrugada.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Entre 2011 y 2022, en Corea del Sur se aplicó una regulación conocida como “Shutdown Law”, que restringía el acceso de menores de 16 años a videojuegos en línea entre las 00:00 y las 06:00.', reflexion:'¿Qué ventajas y desventajas pueden tener las medidas que buscan regular el uso de videojuegos o plataformas digitales en menores de edad?'},
+  {num:10, grupo:'A', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'República Checa se encuentra entre los países europeos con alto nivel de uso de Internet y dispositivos digitales.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'República Checa presenta altos niveles de conectividad y uso de tecnologías digitales en comparación con el promedio europeo, especialmente en población joven.', reflexion:null},
+  {num:1, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántos países organizan el Mundial 2026?', opciones:'A. Uno | B. Dos | C. Tres | D. Cuatro', respuesta:'C. Tres', explicacion:'Tres países comparten la sede: Estados Unidos, Canadá y México. Es la primera vez que tres naciones organizan juntas un Mundial.', reflexion:null},
+  {num:2, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ecosistema tecnológico suizo es reconocido mundialmente por concentrar empresas de blockchain y Web3?', opciones:'A. Silicon Alps | B. Crypto Valley (Zug) | C. Tech Basel | D. Digital Zurich', respuesta:'B. Crypto Valley (Zug)', explicacion:'Crypto Valley, ubicado principalmente en la ciudad de Zug, reúne cientos de empresas vinculadas a blockchain, criptomonedas y tecnologías Web3, y es considerado uno de los ecosistemas más importantes del mundo en este sector.', reflexion:null},
+  {num:3, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo oficial de la selección de Catar en árabe?', opciones:'A. Al-Abyad | B. Al-Annabi | C. Al-Suqour | D. Al-Nusour', respuesta:'B. Al-Annabi (Los Granates)', explicacion:'Al-Annabi es el apodo oficial de la selección catarí y hace referencia al característico color granate de su camiseta.', reflexion:null},
+  {num:4, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué objetivo tuvo la nueva Ley Federal de Protección de Datos de Suiza (revFADP), que entró en vigor en 2023?', opciones:'A. Prohibir las redes sociales a menores de 16 años | B. Modernizar la protección de datos personales y alinearla con las normas europeas de privacidad digital | C. Crear un impuesto a las grandes plataformas digitales | D. Obligar a utilizar únicamente plataformas europeas', respuesta:'B. Modernizar la protección de datos personales y alinearla con las normas europeas de privacidad digital', explicacion:'La revFADP moderniza la legislación suiza de protección de datos personales y la acerca a los estándares europeos de privacidad digital.', reflexion:null},
+  {num:5, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es la velocidad media aproximada de Internet móvil en Catar?', opciones:'A. 120 Mbps | B. 280 Mbps | C. 511 Mbps | D. 750 Mbps', respuesta:'C. 511 Mbps', explicacion:'Catar presenta una de las velocidades de Internet móvil más altas del mundo, con promedios superiores a los 500 Mbps según mediciones internacionales recientes.', reflexion:null},
+  {num:6, grupo:'B', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Suiza tiene aproximadamente el 50% de su población con acceso a Internet.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Suiza presenta una conectividad casi universal, con alrededor del 99% de la población utilizando Internet, lo que equivale a más de 8 millones de usuarios. (DataReportal · Digital 2025 Switzerland)', reflexion:null},
+  {num:7, grupo:'B', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Bosnia y Herzegovina conviven tres lenguas principales y dos alfabetos que se utilizan en distintos contextos digitales', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En Bosnia y Herzegovina se utilizan el bosnio, croata y serbio, junto con los alfabetos latino y cirílico, lo que genera un entorno multilingüe y multiscript en medios digitales y comunicación en línea.', reflexion:'¿Cómo influye la diversidad de lenguas y alfabetos en el acceso y circulación de información en Internet?'},
+  {num:8, grupo:'B', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué hace el proyecto Arachnid desarrollado en Canadá?', opciones:'A. Bloquea publicidad en sitios infantiles | B. Detecta y ayuda a identificar contenido ilegal en Internet mediante sistemas automatizados | C. Monitorea el tiempo de pantalla de menores | D. Filtra contenidos violentos en redes sociales', respuesta:'B. Usa Inteligencia Artificial para detectar contenido ilegal en Internet mediante sistemas automatizados', explicacion:'Arachnid, desarrollado por el Canadian Centre for Child Protection, es un sistema que utiliza tecnología automatizada para detectar y reportar contenido ilegal en Internet a las plataformas correspondientes.', reflexion:null},
+  {num:9, grupo:'B', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Catar fue uno de los primeros países del Golfo en aprobar una ley de protección de datos personales.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'La Ley de Protección de la Privacidad de Datos Personales (2016) de Catar establece un marco legal para el tratamiento de datos personales, siendo una de las primeras regulaciones de este tipo en la región del Golfo.', reflexion:'¿Qué tipo de información personal debería estar protegida en Internet?'},
+  {num:10, grupo:'B', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Suiza cuenta con universidades y centros de investigación de alto nivel en inteligencia artificial como ETH Zürich y EPFL.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Suiza alberga instituciones académicas de referencia mundial como ETH Zürich y EPFL, reconocidas por su investigación en inteligencia artificial y ciencias computacionales.', reflexion:null},
+  {num:1, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje de niñas, niños y adolescentes de 9 a 17 años usa Internet en Brasil?', opciones:'A. 45% | B. 65% | C. 86% | D. Más del 90%', respuesta:'D. Más del 90%', explicacion:'En Brasil, el 93% de la población de 9 a 17 años utiliza Internet, según la encuesta TIC Kids Online Brasil.', reflexion:'Internet forma parte de la vida cotidiana de millones de chicos y chicas. ¿Qué habilidades y cuidados considerás importantes para navegar de forma segura y respetuosa?'},
+  {num:2, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el nivel de acceso a Internet en Haití?', opciones:'A. Menos del 40% | B. Entre el 50 y el 60% | C. Entre el 70 y el 80% | D. Más del 90%', respuesta:'A. Menos del 40%', explicacion:'Según datos recientes, menos del 40% de la población de Haití utiliza Internet, lo que convierte al país en uno de los que presentan menores niveles de conectividad de la región.', reflexion:'¿Qué oportunidades pueden verse limitadas cuando una parte importante de la población no tiene acceso a Internet? ¿Cómo influye la conectividad en el acceso a la educación, la información, el trabajo y la participación ciudadana?'},
+  {num:3, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántas veces fue Brasil campeón del mundo?', opciones:'A. Tres veces | B. Cuatro veces | C. Cinco veces | D. Seis veces', respuesta:'C. Cinco veces', explicacion:'Brasil es pentacampeón: ganó en 1958, 1962, 1970, 1994 y 2002.', reflexion:null},
+  {num:4, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ley de Marruecos regula la protección de los datos personales?', opciones:'A. Ley 09-08 (2009) | B. Ley GDPR Magreb | C. Ley 2013-450 | D. Digital Morocco Act', respuesta:'A. Ley 09-08 (2009)', explicacion:'La Ley 09-08, aprobada en 2009, establece normas para la protección de los datos personales en Marruecos y es supervisada por la Comisión Nacional de Control de la Protección de los Datos de Carácter Personal (CNDP).', reflexion:'¿Qué tipo de información personal compartimos cuando usamos aplicaciones, redes sociales o sitios web? ¿Por qué es importante que existan leyes para proteger esos datos?'},
+  {num:5, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿En qué área ha trabajado la Unión Internacional de Telecomunicaciones (ITU) para apoyar la conectividad en Haití?', opciones:'A. Desarrollo de plataformas de streaming | B. Reconstrucción de infraestructura de telecomunicaciones tras desastres | C. Fabricación de teléfonos móviles | D. Creación de redes sociales nacionales', respuesta:'B. Reconstrucción de infraestructura de telecomunicaciones tras desastres', explicacion:'La Unión Internacional de Telecomunicaciones (ITU) ha colaborado en proyectos de reconstrucción y fortalecimiento de las redes de telecomunicaciones en Haití, especialmente después de desastres naturales y otras situaciones de emergencia.', reflexion:'¿Cómo puede afectar a una comunidad que las redes de comunicación dejen de funcionar después de una emergencia o un desastre natural?'},
+  {num:6, grupo:'C', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Brasil?', opciones:'A. La Canarinha | B. Seleção | C. La Verde-Amarela | D. Os Guerreiros', respuesta:'A. La Canarinha', explicacion:'La selección de Brasil es conocida popularmente como “La Canarinha”, en referencia al color amarillo de su camiseta.', reflexion:null},
+  {num:7, grupo:'C', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Marruecos llegó a las semifinales del Mundial de Qatar 2022 siendo el primer equipo africano en ganar una Copa del Mundo.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'En el Mundial de Qatar 2022, Marruecos alcanzó las semifinales, convirtiéndose en el primer equipo africano y árabe en lograrlo, pero nunca ganó la Copa del Mundo.', reflexion:null},
+  {num:8, grupo:'C', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Brasil fue uno de los primeros países en establecer un marco legal que reconoce derechos digitales en Internet.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'El Marco Civil de Internet (Ley 12.965/2014) de Brasil es una de las primeras leyes del mundo en establecer principios como la neutralidad de la red, la privacidad y la libertad de expresión en entornos digitales.', reflexion:'¿Por qué es importante que existan leyes que regulen derechos en Internet?'},
+  {num:9, grupo:'C', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La ciudad de Dundee (Escocia) es considerada uno de los principales centros históricos del desarrollo de videojuegos en el Reino Unido.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Dundee es reconocida como un importante polo en la historia de la industria de videojuegos del Reino Unido, sede de estudios como DMA Design (origen de Rockstar North) y creadora de títulos como Lemmings.', reflexion:null},
+  {num:10, grupo:'C', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El kreyòl ayisyen (criollo haitiano) es un idioma criollo con creciente producción y presencia en contenidos digitales.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'El kreyòl ayisyen (criollo haitiano) ha ampliado su uso en entornos digitales como redes sociales, mensajería y medios, consolidándose como una lengua de comunicación digital junto al francés en Haití. (Akademi Kreyòl Ayisyen)', reflexion:'¿Por qué es importante que distintas lenguas estén presentes en Internet?'},
+  {num:1, grupo:'D', tema:'Opción múltiple', tipo:'MC', pregunta:'¿En qué país tienen sede muchas de las plataformas digitales más utilizadas del mundo, como Google, Instagram, YouTube y Amazon?', opciones:'A. China | B. Alemania | C. Estados Unidos | D. Japón', respuesta:'C. Estados Unidos', explicacion:'Muchas de las plataformas digitales más utilizadas a nivel global fueron desarrolladas por empresas con sede en Estados Unidos, especialmente en la región conocida como Silicon Valley.', reflexion:'¿Cómo influyen las decisiones de las grandes plataformas digitales en la forma en que nos informamos, nos comunicamos y participamos en Internet?'},
+  {num:2, grupo:'D', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuánto tiempo conectados por día pasan en promedio los usuarios de Internet en Turquía?', opciones:'A. 3 horas 20 minutos | B. 5 horas 10 minutos | C. 7 horas 13 minutos | D. 9 horas', respuesta:'C. 7 horas 13 minutos', explicacion:'En Turquía, los usuarios pasan en promedio más de 7 horas diarias conectados a Internet, uno de los niveles más altos registrados a nivel global según mediciones recientes. (DataReportal · Digital 2025)', reflexion:'¿Cuántas horas por día pasás vos conectado? ¿Creés que hay un tiempo considerado saludable?'},
+  {num:3, grupo:'D', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de fútbol de Estados Unidos?', opciones:'A. The Eagles | B. Stars and Stripes | C. The Patriots | D. Uncle Sam', respuesta:'B. Stars and Stripes', explicacion:'"Stars and Stripes" (Estrellas y Barras) es el apodo de la selección estadounidense.', reflexion:null},
+  {num:4, grupo:'D', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ley estadounidense protege a los menores de 13 años en plataformas digitales desde 1998?', opciones:'A. KOSA | B. COPPA | C. CIPA | D. Digital Kids Act', respuesta:'B. COPPA', explicacion:'La Children\'s Online Privacy Protection Act (COPPA) protege a los menores de 13 años y es supervisada por la FTC.', reflexion:'¿Conocés la edad mínima para abrir una cuenta en las redes que usás? ¿Se respeta en la práctica?'},
+  {num:5, grupo:'D', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Paraguay es uno de los pocos países de América donde una lengua indígena —el guaraní— es cooficial con el español.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En Paraguay, el guaraní es lengua oficial junto al español y es ampliamente utilizado en la vida cotidiana. También cuenta con presencia en entornos digitales, incluyendo contenidos en línea y versiones de Wikipedia como Vikipetã.', reflexion:null},
+  {num:6, grupo:'D', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Australia fue el primer país del mundo en aprobar el acceso a redes sociales a menores de 16 años.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Desde el 10 de diciembre de 2025, Australia es el primer país del mundo en prohibir el acceso a redes sociales a menores de 16 años. Las plataformas que incumplan pueden ser sancionadas con hasta 49,5 millones de dólares australianos. (eSafety Commissioner)', reflexion:'¿Qué se gana y qué se pierde con una medida así? ¿Qué otras soluciones existen para proteger a los menores en línea?'},
+  {num:7, grupo:'D', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Turquía se introdujo en 2022 una figura legal vinculada a la difusión de información considerada falsa en Internet.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En 2022, Turquía incorporó en su legislación una disposición relacionada con la difusión de información considerada falsa, que ha sido objeto de debate y críticas por parte de organizaciones de derechos digitales y libertad de expresión. (IFEX · Libertad de prensa en Turquía)', reflexion:'¿Qué desafíos plantea regular la información en Internet?'},
+  {num:8, grupo:'D', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántas horas diarias pasan en promedio los adolescentes en Estados Unidos frente a pantallas, sin contar escuela ni tareas?', opciones:'A. Menos de 4 horas | B. Entre 4 y 6 horas | C. 8 horas 39 minutos | D. Más de 12 horas', respuesta:'C. 8 horas 39 minutos', explicacion:'En Estados Unidos, los adolescentes pasan en promedio más de 8 horas diarias frente a pantallas en actividades de entretenimiento, según estimaciones de Common Sense Media.', reflexion:'¿Cómo influye el uso de pantallas en distintas actividades (estudio, comunicación, entretenimiento) en la vida cotidiana?'},
+  {num:9, grupo:'D', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Las series turcas (dizi) se emiten solo en Turquía', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Las series turcas (dizi) son fenómeno global en Netflix, MBC y YouTube: se emiten en más de 100 países y son el segundo producto audiovisual más exportado del mundo después de las producciones estadounidenses. (TRT)', reflexion:null},
+  {num:10, grupo:'D', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Australia fue uno de los primeros países en debatir la prohibición del acceso a redes sociales para menores de 16 años.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Australia ha impulsado debates y regulaciones sobre el acceso de menores a redes sociales, incluyendo propuestas para limitar su uso por edad.', reflexion:null},
+  {num:1, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ley alemana obliga a las plataformas a eliminar contenido ilegal en 24 horas bajo pena de multa?', opciones:'A. GDPR | B. NetzDG | C. DSA | D. GjSM', respuesta:'B. NetzDG', explicacion:'La Netzwerkdurchsetzungsgesetz (NetzDG, 2017) fue la primera ley del mundo en imponer este requisito, con multas de hasta 50 millones de euros.', reflexion:'¿Quién decide qué contenido es "ilegal" en Internet? ¿Podría usarse esta ley para censurar contenido legítimo?'},
+  {num:2, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje de la población de Costa de Marfil todavía no tiene acceso a Internet?', opciones:'A. Menos del 20% | B. Alrededor del 40% | C. Más del 59% | D. Solo el 5%', respuesta:'C. Más del 59%', explicacion:'El 59,3% de la población de Costa de Marfil sigue sin conectarse, con mayor desigualdad en zonas rurales y entre mujeres.', reflexion:'Costa de Marfil tiene una de las poblaciones más jóvenes del mundo (edad mediana: 18,3 años). ¿Qué oportunidades se pierden cuando los jóvenes no tienen acceso a internet?'},
+  {num:3, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Costa de Marfil?', opciones:'A. Los Leones | B. Les Éléphants (Los Elefantes) | C. Las Águilas | D. Los Leopardos', respuesta:'B. Les Éléphants (Los Elefantes)', explicacion:'"Les Éléphants" es el apodo de la selección marfileña, bicampeona de África.', reflexion:null},
+  {num:4, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué autoridad alemana está dedicada a la protección digital de niñas, niños y adolescentes?', opciones:'A. Jugendamt | B. BzKJ (Bundeszentrale) | C. NetzDG Komission | D. DSB', respuesta:'B. BzKJ (Bundeszentrale)', explicacion:'La BzKJ es la autoridad federal alemana especializada en la protección de niñas, niños y adolescentes en los entornos digitales y los medios de comunicación.', reflexion:'¿Existe un organismo similar en Argentina? ¿Quién debería encargarse de proteger a los chicos y chicas en Internet: el Estado, las escuelas, las familias, las plataformas digitales o una combinación de todos ellos?'},
+  {num:5, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué juego ganó el premio al Juego del Año 2023 en los Game Awards, creado por un estudio belga?', opciones:'A. The Legend of Zelda | B. Spider-Man 2 | C. Baldur\'s Gate 3 | D. Alan Wake 2', respuesta:'C. Baldur\'s Gate 3', explicacion:'Baldur\'s Gate 3, creado por Larian Studios en Gante (Bélgica), ganó el GOTY 2023 derrotando a los grandes estudios de EE.UU. y Japón.', reflexion:null},
+  {num:6, grupo:'E', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Alemania?', opciones:'A. Das Team | B. Die Mannschaft | C. Die Adler | D. Schwarz-Rot-Gold', respuesta:'B. Die Mannschaft', explicacion:'El apodo de la selección de Alemania es "Die Mannschaft"', reflexion:null},
+  {num:7, grupo:'E', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Curazao es el país con menor cantidad de habitantes del Mundial 2026, con solo 186 mil personas.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Curazao tiene 186 mil habitantes — toda su población cabe en un estadio mundialista. Es el país más pequeño de la historia en clasificar a una Copa del Mundo de 48 equipos.', reflexion:null},
+  {num:8, grupo:'E', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Ecuador tiene tres idiomas cooficiales: español, kichwa y shuar.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Ecuador tiene tres idiomas cooficiales (español, kichwa y shuar). Crecen iniciativas para crear contenido digital en kichwa, incluidas páginas de Wikipedia y canales de YouTube. (CONAIE)', reflexion:'¿Qué se pierde cuando un idioma desaparece del mundo digital?'},
+  {num:9, grupo:'E', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Costa de Marfil, el uso del teléfono móvil para servicios financieros está restringido y solo puede utilizarse con cuentas bancarias tradicionales.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'En Costa de Marfil, el teléfono móvil se utiliza ampliamente como herramienta financiera a través de servicios de dinero móvil (mobile money), que permiten realizar pagos, transferencias y operaciones sin necesidad de una cuenta bancaria tradicional.', reflexion:null},
+  {num:10, grupo:'E', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El género musical coupé-décalé de Costa de Marfil surgió a principios de la década de 2020.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'El coupé-décalé es un género musical originado a comienzos de los años 2000 en la diáspora marfileña en París, y luego se expandió internacionalmente.', reflexion:null},
+  {num:1, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál de estas empresas japonesas es una de las más importantes en la industria de los videojuegos a nivel mundial?', opciones:'A. Sony | B. Nintendo | C. Sega | D. Bandai Namco', respuesta:'B. Nintendo', explicacion:'Nintendo es una empresa japonesa de videojuegos fundada en 1889. La Nintendo Switch se convirtió en una de las consolas más populares del mundo.', reflexion:'Los videojuegos forman parte de la cultura digital de millones de personas. ¿Qué habilidades o aprendizajes pueden desarrollarse a través de los videojuegos?'},
+  {num:2, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es la aplicación de mensajería dominante en Japón?', opciones:'A. WhatsApp | B. LINE | C. Telegram | D. WeChat', respuesta:'B. LINE', explicacion:'LINE es la aplicación de mensajería más utilizada en Japón. Además de enviar mensajes, permite realizar llamadas, pagos digitales y acceder a diversos servicios desde una misma plataforma.', reflexion:'¿Por qué creés que distintas regiones del mundo utilizan aplicaciones de mensajería diferentes? ¿Qué factores culturales, tecnológicos o sociales pueden influir en esa elección?'},
+  {num:3, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Japón?', opciones:'A. Rising Sun | B. Samurai Blue | C. Eastern Tigers | D. Pacific Warriors', respuesta:'B. Samurai Blue', explicacion:'"Samurai Blue" es el apodo de la selección japonesa, que participa en su 7.º Mundial consecutivo.', reflexion:null},
+  {num:4, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué estudio sueco creó Minecraft?', opciones:'A. Epic Games | B. Valve | C. Mojang Studios | D. DICE', respuesta:'C. Mojang Studios', explicacion:'Mojang Studios, con sede en Estocolmo (Suecia), creó Minecraft. Es uno de los videojuegos más vendidos de la historia.', reflexion:null},
+  {num:5, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué decreto aprobado en Túnez en 2022 establece sanciones por la difusión de información considerada falsa en entornos digitales?', opciones:'A. Decreto 47/2019 | B. Decreto 54/2022 | C. Ley Digital 2020 | D. Reforma Constitucional 2021', respuesta:'B. Decreto 54/2022', explicacion:'El Decreto 54, aprobado en Túnez en 2022, establece sanciones para determinadas formas de difusión de información considerada falsa a través de medios digitales y redes de comunicación.', reflexion:'¿Cómo se puede combatir la desinformación sin restringir la libertad de expresión? ¿Es posible encontrar un equilibrio entre ambos objetivos?'},
+  {num:6, grupo:'F', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Países Bajos?', opciones:'A) Los Samurai Azules B) La naranja mecánica C) Los diablos rojos', respuesta:'"La Naranja Mecánica"', explicacion:'La Naranja Mecánica: apodo de la selección neerlandesa de los años 70 por su camiseta naranja y su juego preciso y coordinado', reflexion:null},
+  {num:7, grupo:'F', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El apodo de la selección de Japón es \'Samuráis Azules\'.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Por la tradición samurái japonesa y el color azul de su uniforme.', reflexion:null},
+  {num:8, grupo:'F', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Spotify fue fundada en Túnez', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Spotify fue fundada en Estocolmo, Suecia, en 2006. Es una de las principales plataformas de streaming de música a nivel mundial.', reflexion:'¿Cómo cambiaron las plataformas digitales la forma en que escuchamos música?'},
+  {num:9, grupo:'F', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La Revolución de Túnez (2010–2011) es uno de los casos más estudiados sobre el papel de las redes sociales en la organización de movimientos sociales.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'La llamada “Revolución del Jazmín” en Túnez es ampliamente analizada por su uso de redes sociales como parte de la organización y difusión de protestas durante el período 2010–2011. (Harvard Kennedy School · Shorenstein Center)', reflexion:'¿Cómo influyen las redes sociales en la organización de movimientos sociales y la circulación de información?'},
+  {num:10, grupo:'F', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Países Bajos fue el tercer país en aplicar oficialmente la Observación General N.º 25 de la ONU sobre derechos de la infancia en entornos digitales.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'La Observación General N.º 25 de la ONU establece principios sobre los derechos de la infancia en entornos digitales. Países Bajos ha sido uno de los países que incorporan estos lineamientos en sus políticas, pero no existe una clasificación oficial por orden de aplicación entre países.', reflexion:'¿Por qué es importante que los derechos de la infancia también se apliquen en Internet?'},
+  {num:1, grupo:'G', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántos seguidores en Instagram tiene aproximadamente Mohamed Salah, el capitán de Egipto?', opciones:'A. Más de 10 millones | B. Más de 35 millones | C. Más de 65 millones | D. Más de 200 millones', respuesta:'C. Más de 65 millones', explicacion:'Mohamed Salah cuenta con más de 65 millones de seguidores en Instagram, lo que lo convierte en una de las personalidades más seguidas del mundo árabe y del fútbol internacional', reflexion:'¿Qué ventajas y desafíos puede tener para una persona famosa comunicarse con millones de seguidores a través de las redes sociales? ¿Cómo influye esa audiencia en los mensajes que comparte?'},
+  {num:2, grupo:'G', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el porcentaje de acceso a internet en Bélgica?', opciones:'A. Alrededor del 70% | B. Alrededor del 80% | C. Alrededor del 93% | D. 100%', respuesta:'C. Alrededor del 93%', explicacion:'Alrededor del 93% de la población de Bélgica utiliza Internet, lo que refleja un alto nivel de conectividad digital.', reflexion:null},
+  {num:3, grupo:'G', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje aproximado de la población de Egipto no tiene acceso a Internet?', opciones:'A. Menos del 10% | B. Alrededor del 20% | C. Más del 40% | D. Más del 60%', respuesta:'B. Alrededor del 20%', explicacion:'Aproximadamente una quinta parte de la población de Egipto no tiene acceso a Internet, lo que refleja una brecha digital significativa, especialmente entre zonas urbanas y rurales.', reflexion:'¿Qué dificultades puede generar no tener acceso a Internet en la vida cotidiana?'},
+  {num:4, grupo:'G', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué plataforma digital ha tenido un rol central en la comunicación digital en Irán en los últimos años?', opciones:'A. Facebook | B. Instagram | C. Telegram | D. TikTok', respuesta:'C. Telegram', explicacion:'Telegram ha sido una de las plataformas más utilizadas en Irán para comunicación, difusión de información y organización social, especialmente en contextos de restricciones a otras redes sociales.', reflexion:'¿Cómo influyen las decisiones de un país sobre qué plataformas se pueden usar en la vida digital de las personas?'},
+  {num:5, grupo:'G', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Nueva Zelanda?', opciones:'A. All Whites | B. Silver Ferns | C. All Blacks | D. Pacific Warriors', respuesta:'A. All Whites', explicacion:'"All Whites" es el apodo de la selección masculina de fútbol de Nueva Zelanda, en referencia al color blanco de su uniforme.', reflexion:null},
+  {num:6, grupo:'G', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En Irán, plataformas como Facebook, YouTube y TikTok están plenamente disponibles para toda la población.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'En Irán existen restricciones y bloqueos a múltiples plataformas digitales globales, lo que limita el acceso directo a servicios como redes sociales y sitios de contenido. (Freedom House · Freedom on the Net 2024)', reflexion:'¿Cómo impactan las restricciones de acceso a plataformas digitales en el derecho a la información?'},
+  {num:7, grupo:'G', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Nueva Zelanda es uno de los países donde el streaming representa una de las mayores proporciones del consumo televisivo.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En Nueva Zelanda, una gran parte del tiempo de visualización de contenidos audiovisuales se realiza a través de plataformas de streaming como Netflix o YouTube, ubicándola entre los países con mayor adopción de este tipo de consumo. (DataReportal · Global Statshot July 2025)', reflexion:null},
+  {num:8, grupo:'G', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Bélgica fue uno de los primeros países europeos en desarrollar una infraestructura de banda ancha fija con alta cobertura nacional en los años 2000.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Bélgica se encuentra entre los países europeos con mayor despliegue temprano de Internet de banda ancha fija, con alta penetración de conectividad en hogares desde principios de los años 2000, impulsada por una fuerte infraestructura de telecomunicaciones.', reflexion:null},
+  {num:9, grupo:'G', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Nueva Zelanda es uno de los países con mayor entusiasmo por la inteligencia artificial del mundo.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Según encuestas recientes, en Nueva Zelanda el nivel de entusiasmo por la inteligencia artificial es moderado en comparación con otros países, lo que refleja una postura más cautelosa frente a esta tecnología. (DataReportal · Global Statshot July 2025)', reflexion:'¿Por qué algunos países adoptan la inteligencia artificial con más cautela que otros?'},
+  {num:10, grupo:'G', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Egipto es el país árabe más poblado del mundo, con más de 100 millones de habitantes.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Con más de 100 millones de habitantes, Egipto es el país más poblado del mundo árabe y uno de los mercados digitales más grandes de la región.', reflexion:null},
+  {num:1, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje aproximado de los internautas en España usa WhatsApp activamente?', opciones:'A. Alrededor del 40% | B. Alrededor del 60% | C. Más del 85% | D. Casi el 100%', respuesta:'C. Más del 85%', explicacion:'WhatsApp es la plataforma de mensajería dominante en España y es utilizada por la gran mayoría de los internautas del país.', reflexion:null},
+  {num:2, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántas veces fue España campeona del mundo?', opciones:'A. Ninguna | B. Una vez (2010) | C. Dos veces | D. Tres veces', respuesta:'B. Una vez (2010)', explicacion:'España ganó su único Mundial en 2010 en Sudáfrica, con el gol de Iniesta en la final contra Holanda.', reflexion:null},
+  {num:3, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es una característica de la regulación digital en Arabia Saudita?', opciones:'A. Total libertad sin restricciones | B. Las autoridades pueden solicitar la eliminación de contenidos en plataformas digitales | C. Solo permite plataformas locales | D. No existe regulación sobre Internet', respuesta:'B. Las autoridades pueden solicitar la eliminación de contenidos en plataformas digitales', explicacion:'En Arabia Saudita, las autoridades regulatorias pueden requerir a las plataformas digitales la eliminación de contenidos que no cumplan con la normativa local.', reflexion:null},
+  {num:4, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántas veces fue Uruguay campeón del mundo?', opciones:'A. Una vez | B. Dos veces | C. Tres veces | D. Cuatro veces', respuesta:'B. Dos veces', explicacion:'Uruguay es bicampeón mundial: ganó en 1930 (el primer Mundial de la historia) y en 1950.', reflexion:null},
+  {num:5, grupo:'H', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El apodo de la selección de Uruguay es \'La Azul\'.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'El apodo de la selección uruguaya es \'La Celeste\'', reflexion:null},
+  {num:6, grupo:'H', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La población de Cabo Verde que vive en el exterior es muy numerosa en relación con la que vive dentro del país.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Muchas personas originarias de Cabo Verde viven en otros países, como Portugal, Países Bajos y Estados Unidos. Este grupo en el exterior es muy importante en relación con la población total del país, según estimaciones internacionales de migración.', reflexion:'¿Cómo ayudan las tecnologías digitales a mantener el vínculo entre personas que viven en distintos países?'},
+  {num:7, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuánto tiempo pasan en promedio los usuarios en Arabia Saudita conectados a Internet por día?', opciones:'A. 3 horas | B. 4 horas 30 minutos | C. 6 horas 35 minutos | D. 9 horas', respuesta:'C. 6 horas 35 minutos', explicacion:'En Arabia Saudita, el tiempo promedio diario de uso de Internet supera las seis horas, lo que refleja un alto nivel de conectividad y consumo digital.', reflexion:'¿Cómo influye el tiempo de conexión a Internet en la vida cotidiana de las personas?'},
+  {num:8, grupo:'H', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Uruguay fue uno de los primeros países en implementar un programa nacional que entregó computadoras portátiles a estudiantes de escuelas públicas.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Uruguay, a través del Plan Ceibal iniciado en 2007, fue pionero a nivel mundial en la implementación de un programa nacional de entrega de computadoras portátiles en la educación pública, convirtiéndose en un referente en educación digital.', reflexion:'¿Qué impacto tuvo tener una computadora en las escuelas públicas?'},
+  {num:9, grupo:'H', tema:'Opción múltiple', tipo:'MC', pregunta:'¿A qué edad puede un menor prestar por sí mismo consentimiento para el tratamiento de sus datos personales en España?', opciones:'A. 12 años | B. 13 años | C. 14 años | D. 16 años', respuesta:'C. 14 años', explicacion:'En España, los menores pueden autorizar por sí mismos el tratamiento de sus datos personales a partir de los 14 años. Antes de esa edad, el consentimiento debe ser otorgado por sus padres o representantes legales, según lo establece la Ley Orgánica de Protección de Datos Personales y Garantía de los Derechos Digitales (LOPDGDD).', reflexion:'¿Qué te parece esta medida?'},
+  {num:10, grupo:'H', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La autoridad reguladora de telecomunicaciones en Arabia Saudita puede solicitar la eliminación de contenidos digitales que no cumplan con la normativa local.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Las autoridades regulatorias de telecomunicaciones en Arabia Saudita supervisan el entorno digital y pueden solicitar a las plataformas la eliminación de contenidos que contravengan la normativa vigente.', reflexion:'¿Cómo se regula el contenido en Internet en distintos países del mundo?'},
+  {num:1, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántos seguidores en Instagram tiene Kylian Mbappé?', opciones:'A. Más de 10 millones | B. Más de 50 millones | C. Más de 100 millones | D. Más de 300 millones', respuesta:'C. Más de 100 millones', explicacion:'Mbappé tiene más de 100 millones de seguidores en Instagram: es el futbolista más seguido de Francia.', reflexion:null},
+  {num:2, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el porcentaje de acceso a Internet en Senegal?', opciones:'A. Menos del 30% | B. Alrededor del 60% | C. Alrededor del 80% | D. Más del 90%', respuesta:'B. Alrededor del 60%', explicacion:'Aproximadamente el 60% de la población de Senegal tiene acceso a Internet, lo que refleja un crecimiento sostenido de la conectividad digital en el país.', reflexion:'¿Qué cambia en la vida de las personas cuando cada vez más población tiene acceso a Internet?'},
+  {num:3, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué empresa creó la saga de videojuegos Assassin’s Creed?', opciones:'A. Quantic Dream | B. Ubisoft | C. Gameloft | D. Focus Entertainment', respuesta:'B. Ubisoft', explicacion:'Ubisoft es una empresa de videojuegos con sede en Francia que desarrolló la franquicia Assassin’s Creed, una de las más importantes de la industria.', reflexion:null},
+  {num:4, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué medida ha impulsado Francia en relación con el acceso de menores a redes sociales?', opciones:'A. Prohibición total para menores de 18 | B. Reforzamiento de mecanismos de verificación de edad | C. Cierre de TikTok | D. Multas para padres', respuesta:'B. Reforzamiento de mecanismos de verificación de edad', explicacion:'Francia ha impulsado medidas para fortalecer la verificación de edad en plataformas digitales, con el objetivo de mejorar la protección de menores en redes sociales.', reflexion:'¿Cómo se puede verificar la edad en Internet sin afectar la privacidad de las personas?'},
+  {num:5, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué futbolista noruego es uno de los máximos goleadores de su selección y una de las principales figuras del fútbol mundial?', opciones:'A. Martin Ødegaard | B. Erling Haaland | C. Alexander Sørloth | D. Joshua King', respuesta:'B. Erling Haaland', explicacion:'Erling Haaland es una de las máximas figuras del fútbol mundial y el máximo goleador de la historia de la selección de Noruega, superando por casi el doble al segundo máxio goleador, Jørgen Juve', reflexion:null},
+  {num:6, grupo:'I', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Irak regresa al Mundial 10 años después de su última participación.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Irak regresa a un Mundial por primera vez desde 1986 — 40 años después. Su clasificación desató una de las mayores celebraciones digitales del mundo árabe en 2025.', reflexion:null},
+  {num:7, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es un dato destacado sobre Noruega en su nivel de digitalización?', opciones:'A. Es uno de los países con menor uso de efectivo en el mundo | B. Tiene el mayor número de empresas tecnológicas de Europa | C. Es el país con mayor consumo de redes sociales en Europa | D. Prohíbe el uso de Internet en zonas rurales', respuesta:'A. Es uno de los países con menor uso de efectivo en el mundo', explicacion:'Noruega es el país más «cashless» del mundo: más del 95% de las transacciones son digitales y el efectivo prácticamente ha desaparecido del uso cotidiano. Pagar con monedas o billetes en Noruega es hoy algo excepcional.', reflexion:null},
+  {num:8, grupo:'I', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Dakar (Senegal) es un polo emergente de startups tecnológicas en África Occidental.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Dakar ha desarrollado un ecosistema creciente de startups tecnológicas, con presencia de empresas en sectores como fintech y edtech, según informes regionales del sector digital.', reflexion:null},
+  {num:9, grupo:'I', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Noruega fue uno de los primeros países en apagar progresivamente la radio FM para migrar a la radio digital.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Noruega fue el primer país en iniciar el apagado nacional de la radio FM y reemplazarla por el sistema de radio digital DAB, un hito en la transición tecnológica de los medios de comunicación.', reflexion:null},
+  {num:10, grupo:'I', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje aproximado de la población de Irak tiene acceso a Internet?', opciones:'A. Menos del 30% | B. Alrededor del 50% | C. Alrededor del 75% | D. Más del 90%', respuesta:'C. Alrededor del 75%', explicacion:'Actualmente alrededor de tres cuartas partes de la población utilizan Internet.', reflexion:null},
+  {num:1, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué artículo del Código Penal argentino incorpora el delito de grooming desde 2013?', opciones:'A. Ley Olimpia | B. Artículo 131 del Código Penal | C. Ley 25.326 | D. Ley Micaela', respuesta:'B. Artículo 131 del Código Penal', explicacion:'El artículo 131 del Código Penal argentino, incorporado en 2013, tipifica el grooming como delito vinculado al contacto de adultos con menores a través de medios digitales.', reflexion:'¿Qué señales pueden ayudar a identificar situaciones de riesgo en entornos digitales y a quién se puede pedir ayuda?'},
+  {num:2, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué empresas tecnológicas nacidas en Argentina se destacan por su crecimiento e impacto internacional?', opciones:'A. Globant | B. Mercado Libre | C. Auth0 | D. Todas las anteriores', respuesta:'D. Todas las anteriores', explicacion:'Globant, Mercado Libre y Auth0 son empresas tecnológicas fundadas en Argentina que lograron expandirse internacionalmente y desarrollar productos y servicios utilizados por millones de personas y organizaciones en distintos países.', reflexion:'¿Conocés alguna aplicación o servicio digital que uses todos los días y que haya sido desarrollado en Argentina?'},
+  {num:3, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Austria?', opciones:'A. Das Team | B. Die Adler | C. Rot-Weiß-Rot | D. Alpine Eagles', respuesta:'A. Das Team', explicacion:'"Das Team" es el apodo oficial de la selección austriaca.', reflexion:null},
+  {num:4, grupo:'J', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Jordania participa por segunda vez en una Copa del Mundo.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Jordania debuta en una Copa del Mundo por primera vez en su historia en 2026.', reflexion:null},
+  {num:5, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuántos seguidores tiene Lionel Messi en Instagram?', opciones:'A. Más de 100 millones | B. Más de 250 millones | C. Más de 500 millones | D. Más de 800 millones', respuesta:'C. Más de 500 millones', explicacion:'Lionel Messi es una de las personas más seguidas en Instagram a nivel mundial, con cientos de millones de seguidores en la plataforma.', reflexion:'¿Cómo influyen las redes sociales en la visibilidad global de los deportistas?'},
+  {num:6, grupo:'J', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Argentina cuenta con un ecosistema digital que incluye empresas tecnológicas con proyección internacional.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Argentina tiene un ecosistema tecnológico en crecimiento, con empresas de software y servicios digitales que han logrado expandirse y tener impacto en distintos países.', reflexion:null},
+  {num:7, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué idioma, además del árabe, tiene una fuerte presencia en la comunicación digital de Argelia?', opciones:'A. Italiano | B. Francés | C. Portugués | D. Alemán', respuesta:'B. Francés', explicacion:'El francés continúa siendo ampliamente utilizado en medios, educación, tecnología y entornos digitales en Argelia.', reflexion:null},
+  {num:8, grupo:'J', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Amán (Jordania) es uno de los centros emergentes de startups del mundo árabe.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Amán se ha consolidado como uno de los ecosistemas de startups más activos del mundo árabe, con crecimiento en sectores como tecnología financiera y comercio electrónico.', reflexion:'¿Qué factores pueden ayudar a que una ciudad se convierta en un polo de innovación tecnológica?'},
+  {num:9, grupo:'J', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es la red social que más creció en Argelia durante los últimos años?', opciones:'A. Facebook | B. X (Twitter) | C. TikTok | D. Snapchat', respuesta:'C. TikTok', explicacion:'TikTok ha experimentado un fuerte crecimiento en Argelia, impulsado por el aumento de usuarios jóvenes y la popularidad del contenido en árabe argelino (darija).', reflexion:null},
+  {num:10, grupo:'J', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Austria cuenta con uno de los niveles de acceso a Internet más altos de Europa.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Austria presenta altos niveles de conectividad digital y acceso a Internet, en línea con otros países de Europa Occidental.', reflexion:null},
+  {num:1, grupo:'K', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje aproximado de la población de la República Democrática del Congo tiene acceso a Internet?', opciones:'A. Alrededor del 20% | B. Alrededor del 40% | C. Alrededor del 60% | D. Más del 80%', respuesta:'A. Alrededor del 20%', explicacion:'Aproximadamente ocho de cada diez personas en la República Democrática del Congo no tienen acceso a Internet, lo que refleja una de las brechas digitales más altas del mundo.', reflexion:'¿Qué factores pueden hacer que el acceso a Internet sea muy distinto entre países del mundo?'},
+  {num:2, grupo:'K', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué evento tecnológico de alcance mundial se realiza en Lisboa, Portugal?', opciones:'A. CES | B. Mobile World Congress | C. Web Summit | D. SXSW', respuesta:'C. Web Summit', explicacion:'El Web Summit se realiza en Lisboa desde 2016 y es uno de los eventos de tecnología e innovación más importantes del mundo. Cada año reúne a miles de emprendedores, empresas, inversores y especialistas de numerosos países.', reflexion:'¿Por qué creés que los eventos tecnológicos son importantes para la innovación? ¿Qué beneficios puede traer para una ciudad convertirse en sede de un encuentro internacional de tecnología?'},
+  {num:3, grupo:'K', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ciudad colombiana es reconocida por su transformación hacia un modelo de innovación y desarrollo tecnológico?', opciones:'A. Bogotá | B. Cali | C. Medellín | D. Barranquilla', respuesta:'C. Medellín', explicacion:'Medellín es reconocida internacionalmente por su transformación urbana, educativa y tecnológica. En 2013 recibió el premio "Ciudad Innovadora del Año" y hoy cuenta con iniciativas como Ruta N, un importante centro de innovación, emprendimiento y desarrollo tecnológico.', reflexion:'¿Conocés algún polo tecnológico o espacio de innovación en Argentina? ¿Cómo puede la tecnología ayudar a mejorar la vida de las personas y transformar una ciudad?'},
+  {num:4, grupo:'K', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de la R.D. Congo?', opciones:'A. Les Léopards (Los Leopardos) | B. Los Cobras | C. Les Lions | D. Los Elefantes', respuesta:'A. Les Léopards (Los Leopardos)', explicacion:'"Les Léopards" es el apodo de la selección congoleña, que regresa al Mundial 52 años después (1974).', reflexion:null},
+  {num:5, grupo:'K', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Portugal?', opciones:'A. Os Guerreiros | B. A Seleção das Quinas | C. Os Lusitanos | D. A Equipa', respuesta:'B. A Seleção das Quinas', explicacion:'La selección de Portugal es conocida como “A Seleção das Quinas”, en referencia a los escudos históricos presentes en la bandera del país.', reflexion:null},
+  {num:6, grupo:'K', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Uzbekistán debuta en su primera Copa del Mundo en 2026.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Uzbekistán debuta en una Copa del Mundo por primera vez en su historia en 2026. Con 36,9 millones de habitantes y una de las poblaciones más jóvenes de Asia Central, el país atraviesa una transformación digital acelerada.', reflexion:null},
+  {num:7, grupo:'K', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Colombia tiene uno de los porcentajes más bajo de uso de redes sociales de América Latina.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'Colombia presenta uno de los niveles más altos de uso de redes sociales en América Latina, según informes digitales recientes.', reflexion:null},
+  {num:8, grupo:'K', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Instagram es la plataforma más usada en Uzbekistán para informarse.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'En Uzbekistán, Telegram es una de las principales plataformas utilizadas para informarse, con canales de noticias en idioma uzbeko que alcanzan grandes audiencias. (DataReportal · Digital 2025 Uzbekistan)', reflexion:'¿Por qué en algunos países ciertas aplicaciones se convierten en fuentes principales de información?'},
+  {num:9, grupo:'K', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'En la República Democrática del Congo se han registrado interrupciones del acceso a Internet en contextos de inestabilidad política.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'En la República Democrática del Congo se han reportado interrupciones temporales del acceso a Internet en determinados contextos de inestabilidad, además de una conectividad desigual en el territorio.', reflexion:'¿Cómo afecta la interrupción de Internet a la vida cotidiana de las personas en un país?'},
+  {num:10, grupo:'K', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La rumba congoleña fue declarada Patrimonio Inmaterial de la Humanidad por la UNESCO.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'La rumba congoleña fue inscrita por la UNESCO como Patrimonio Inmaterial de la Humanidad, reconociendo su importancia cultural en África Central.', reflexion:null},
+  {num:1, grupo:'L', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué país tiene el mayor porcentaje de propietarios de relojes inteligentes del mundo?', opciones:'A. Estados Unidos | B. Japón | C. Corea del Sur | D. Croacia', respuesta:'D. Croacia', explicacion:'Croacia registra el mayor porcentaje de propietarios de relojes inteligentes del mundo: cerca de 4 de cada 10 adultos conectados a Internet afirman tener uno de estos dispositivos.', reflexion:null},
+  {num:2, grupo:'L', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Cuál es el apodo de la selección de Inglaterra?', opciones:'A. The Lions | B. The Three Lions | C. The Red Lions | D. The Crown', respuesta:'B. The Three Lions', explicacion:'La selección de Inglaterra es conocida como “The Three Lions”, en referencia a un símbolo heráldico tradicional del país.', reflexion:null},
+  {num:3, grupo:'L', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El apodo más conocido de la selección de Croacia es “Vatreni”, que significa “Los Ardientes”.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'“Vatreni” es el apodo más utilizado para la selección de Croacia y significa “Los Ardientes” en croata.', reflexion:null},
+  {num:4, grupo:'L', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué porcentaje aproximado de los internautas de Ghana se declara entusiasta con la inteligencia artificial?', opciones:'A. Menos del 20% | B. Alrededor del 40% | C. Alrededor del 60% | D. Casi el 90%', respuesta:'C. Alrededor del 60%', explicacion:'Aproximadamente seis de cada diez internautas en Ghana se declaran entusiastas con la inteligencia artificial, según estimaciones de encuestas globales sobre percepción tecnológica.', reflexion:'¿Por qué creés que las personas en distintos países pueden tener percepciones diferentes sobre la inteligencia artificial?'},
+  {num:5, grupo:'L', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El reguetón nació en Ghana en la década de 1990.', opciones:'Verdadero / Falso', respuesta:'Falso', explicacion:'El reguetón se desarrolló en América Latina en los años 90, principalmente en Panamá y Puerto Rico, antes de expandirse a nivel global.', reflexion:null},
+  {num:6, grupo:'L', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'La Premier League es una de las ligas deportivas más seguidas en redes sociales del mundo.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'La Premier League es una de las ligas deportivas con mayor presencia en redes sociales a nivel global, con millones de seguidores en sus clubes y canales oficiales en distintas plataformas.', reflexion:'¿Cómo cambió Internet la forma en que los hinchas siguen a sus equipos y deportistas?'},
+  {num:7, grupo:'L', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué ley del Reino Unido establece obligaciones para que las plataformas digitales reduzcan el riesgo de exposición de menores a contenido nocivo?', opciones:'A. Digital Economy Act | B. Children and Families Act | C. Online Safety Act 2023 | D. GDPR for Kids', respuesta:'C. Online Safety Act 2023', explicacion:'La Online Safety Act (2023) establece obligaciones para que las plataformas digitales implementen medidas de seguridad y reducción de riesgos para proteger a menores, bajo la supervisión del regulador Ofcom.', reflexion:'¿Qué responsabilidades deberían tener las plataformas digitales cuando sus usuarios son menores de edad?'},
+  {num:8, grupo:'L', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'El Canal de Panamá y algunos cables submarinos de fibra óptica pasan por zonas estratégicas del Caribe panameño.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'El Canal de Panamá es una de las principales rutas marítimas del mundo, y en la región del Caribe panameño también se concentran rutas de cables submarinos de fibra óptica que conectan continentes.', reflexion:null},
+  {num:9, grupo:'L', tema:'Opción múltiple', tipo:'MC', pregunta:'¿Qué medio público británico es uno de los portales de noticias digitales más consultados del mundo?', opciones:'A. ITV News | B. Sky News | C. The Guardian | D. BBC News', respuesta:'D. BBC News', explicacion:'BBC News es uno de los servicios de noticias más consultados a nivel global, con presencia en múltiples idiomas y plataformas digitales.', reflexion:null},
+  {num:10, grupo:'L', tema:'Verdadero / Falso', tipo:'V/F', pregunta:'Nikola Tesla nació en el territorio de la actual Croacia.', opciones:'Verdadero / Falso', respuesta:'Verdadero', explicacion:'Nikola Tesla nació en 1856 en Smiljan, localidad que hoy forma parte de Croacia. Sus aportes a la electricidad y las telecomunicaciones influyeron en el desarrollo de muchas tecnologías utilizadas actualmente.', reflexion:null}
+];
+
+    // ════════════════════════════════════════════════════════════
+    // ESTADO DE LA APLICACIÓN
+    // ════════════════════════════════════════════════════════════
+    let preguntas  = [];
+    let grupoActual = 'A';
+    let indexActual = 0;
+    let puntos      = 0;
+    let respuestas  = {};
+
+    // ════════════════════════════════════════════════════════════
+    // INICIALIZACIÓN
+    // ════════════════════════════════════════════════════════════
+    function init() {
+      preguntas = datosTrivia;
+      renderGrupos();
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // NAVEGACIÓN ENTRE PANTALLAS
+    // ════════════════════════════════════════════════════════════
+    function cambiarPantalla(pantalla) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(pantalla).classList.add('active');
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // PANTALLA 1: SELECTOR DE GRUPOS
+    // ════════════════════════════════════════════════════════════
+    function renderGrupos() {
+      const container = document.getElementById('grupos-container');
+      container.innerHTML = '';
+      GRUPOS.forEach(g => {
+        const btn = document.createElement('div');
+        btn.className = 'g-card' + (g === grupoActual ? ' active' : '');
+        btn.style.setProperty('--gc', COLORES[g]);
+        btn.innerHTML = '<div class="g-escudo">' + g + '</div><div class="g-lbl">Grupo</div>';
+        btn.onclick = () => { grupoActual = g; renderGrupos(); };
+        container.appendChild(btn);
+      });
+    }
+
+    function iniciarTrivia() {
+      indexActual = 0;
+      cambiarPantalla('screen-trivia');
+      mostrarPregunta();
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // PANTALLA 2: PREGUNTAS
+    // ════════════════════════════════════════════════════════════
+    function obtenerPreguntasGrupo() {
+      return preguntas.filter(p => p.grupo === grupoActual);
+    }
+
+    function mostrarPregunta() {
+      const grupo = obtenerPreguntasGrupo();
+      const preg  = grupo[indexActual];
+      if (!preg) return;
+
+      // Numeración local: 1 de 10, 2 de 10 ... (se reinicia por grupo)
+      document.getElementById('preg-num').textContent =
+        'Pregunta ' + (indexActual + 1) + ' de ' + grupo.length + ' · ' + preg.tema;
+      document.getElementById('grupo-label').textContent = grupoActual;
+      document.getElementById('pregunta-txt').textContent = preg.pregunta;
+
+      // Ocultar explicación y reflexión
+      document.getElementById('explicacion').classList.remove('show');
+      document.getElementById('reflexion').classList.remove('show');
+
+      // Limpiar opciones anteriores
+      document.getElementById('opciones-container').innerHTML = '';
+      document.getElementById('vf-container').innerHTML = '';
+
+      // Renderizar opciones según tipo
+      if (preg.tipo === 'MC') {
+        mostrarOpcionesMultiples(preg);
+      } else {
+        mostrarVerdaderoFalso(preg);
+      }
+
+      actualizarBotonesNav();
+    }
+
+    function mostrarOpcionesMultiples(preg) {
+      const container = document.getElementById('opciones-container');
+      preg.opciones.split('|').map(o => o.trim()).forEach(opcion => {
+        const btn = document.createElement('button');
+        btn.className = 'opcion';
+        btn.textContent = opcion;
+        btn.onclick = () => responder(preg, opcion, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function mostrarVerdaderoFalso(preg) {
+      const container = document.getElementById('vf-container');
+      ['Verdadero', 'Falso'].forEach(resp => {
+        const btn = document.createElement('button');
+        btn.className = 'vf-btn ' + resp.toLowerCase();
+        btn.textContent = resp;
+        btn.onclick = () => responder(preg, resp, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // LÓGICA DE RESPUESTAS
+    // ════════════════════════════════════════════════════════════
+    function responder(preg, respuesta, elemento) {
+      const esCorrecta = respuesta === preg.respuesta;
+
+      limpiarRespuestas(preg);
+
+      if (esCorrecta) {
+        elemento.classList.add('correct');
+        if (!respuestas[preg.num]) {
+          puntos += 10;
+          respuestas[preg.num] = true;
+          document.getElementById('puntos').textContent = puntos;
+        }
+      } else {
+        elemento.classList.add('incorrect');
+        mostrarRespuestaCorrecta(preg);
+      }
+
+      // Mostrar explicación
+      document.getElementById('explicacion-txt').textContent = preg.explicacion;
+      document.getElementById('explicacion').classList.add('show');
+
+      // Mostrar reflexión solo si existe
+      if (preg.reflexion) {
+        document.getElementById('reflexion-txt').textContent = preg.reflexion;
+        document.getElementById('reflexion').classList.add('show');
+      }
+    }
+
+    function limpiarRespuestas(preg) {
+      const selector = preg.tipo === 'MC' ? '.opcion' : '.vf-btn';
+      document.querySelectorAll(selector).forEach(e => e.classList.remove('correct', 'incorrect'));
+    }
+
+    function mostrarRespuestaCorrecta(preg) {
+      if (preg.tipo === 'MC') {
+        document.querySelectorAll('.opcion').forEach(e => {
+          if (e.textContent === preg.respuesta) e.classList.add('correct');
+        });
+      } else {
+        document.querySelectorAll('.vf-btn').forEach(e => {
+          if ((e.classList.contains('verdadero') && preg.respuesta === 'Verdadero') ||
+              (e.classList.contains('falso')     && preg.respuesta === 'Falso')) {
+            e.classList.add('correct');
+          }
+        });
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // NAVEGACIÓN ENTRE PREGUNTAS
+    // ════════════════════════════════════════════════════════════
+    function actualizarBotonesNav() {
+      const esUltima = indexActual === obtenerPreguntasGrupo().length - 1;
+      document.getElementById('btn-ant').disabled = indexActual === 0;
+      document.getElementById('btn-sig').textContent = esUltima ? 'Finalizar →' : 'Siguiente →';
+    }
+
+    function preguntaAnterior() {
+      if (indexActual > 0) { indexActual--; mostrarPregunta(); }
+    }
+
+    function preguntaSiguiente() {
+      if (indexActual < obtenerPreguntasGrupo().length - 1) {
+        indexActual++;
+        mostrarPregunta();
+      } else {
+        mostrarFinGrupo();
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // PANTALLA 3: FIN DE GRUPO
+    // ════════════════════════════════════════════════════════════
+    function mostrarFinGrupo() {
+      const grupo = obtenerPreguntasGrupo();
+      const puntajeGrupo = grupo.reduce((acc, p) => acc + (respuestas[p.num] ? 10 : 0), 0);
+      document.getElementById('grupo-fin').textContent  = grupoActual;
+      document.getElementById('puntaje-grupo').textContent = puntajeGrupo;
+      cambiarPantalla('screen-fin-grupo');
+    }
+
+    function volverASeleccionar() {
+      indexActual = 0;
+      cambiarPantalla('screen-inicio');
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // ARRANQUE
+    // ════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
